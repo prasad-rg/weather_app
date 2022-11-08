@@ -9,15 +9,16 @@ import {
 } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const FavouriteScreen = ({navigation}) => {
-  const isPresent = true;
-
   const {favouriteList} = useSelector(state => state.favourite);
-  console.log(favouriteList);
 
   const createTwoButtonAlert = () =>
     Alert.alert('', 'Are you sure want to remove all the favourites?', [
@@ -29,6 +30,17 @@ const FavouriteScreen = ({navigation}) => {
       {text: 'Yes', onPress: () => console.log('OK Pressed')},
     ]);
 
+  const renderItem = ({item}) => {
+    return (
+      <ListView
+        location={item.location}
+        description={item.description}
+        temperature={item.temperature}
+        id={item.id}
+      />
+    );
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -36,7 +48,7 @@ const FavouriteScreen = ({navigation}) => {
       style={styles.background}>
       <SafeAreaView style={styles.background}>
         <AppBar navigation={navigation} />
-        {!isPresent ? (
+        {favouriteList.length === 0 ? (
           <View style={styles.nothingFoundContainer}>
             <Image
               source={require('../../assets/icon_nothing.png')}
@@ -47,18 +59,20 @@ const FavouriteScreen = ({navigation}) => {
         ) : (
           <>
             <View style={styles.cityCount}>
-              <Text style={styles.primaryText}>6 City added as favourite</Text>
+              <Text style={styles.primaryText}>
+                {favouriteList.length} City added as favourite
+              </Text>
               <TouchableOpacity onPress={createTwoButtonAlert}>
                 <Text style={styles.primaryText}>Remove All</Text>
               </TouchableOpacity>
             </View>
-            <ScrollView style={styles.list}>
-              <ListView />
-              <ListView />
-              <ListView />
-              <ListView />
-              <ListView />
-            </ScrollView>
+            <View style={styles.list}>
+              <FlatList
+                data={favouriteList}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
+            </View>
           </>
         )}
       </SafeAreaView>

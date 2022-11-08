@@ -1,25 +1,37 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
+import {removeFromFavourite} from '../redux/favoutite';
 
-const ListView = ({location, temperature, source, description}) => {
+const ListView = ({
+  location = 'Udupi, Karnataka',
+  temperature = '31',
+  source,
+  description = 'Mostly Sunny',
+  id,
+}) => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
-        <Text style={styles.primaryText}>Udupi, Karnataka</Text>
+        <Text style={styles.primaryText}>{location}</Text>
         <View style={styles.infoContainer}>
           <Image
             source={require('../../assets/icon_mostly_sunny_small.png')}
             style={styles.weatherLogo}
           />
-          <Text style={styles.temperatureText}>31</Text>
+          <Text style={styles.temperatureText}>{temperature}</Text>
           <Text style={styles.degreeSymbol}>ºC</Text>
-          <Text style={styles.weatherIsLikely}>Mostly Sunny</Text>
+          <Text style={styles.weatherIsLikely}>{description}</Text>
         </View>
       </View>
-      <Image
-        source={require('../../assets/icon_favourite_active.png')}
-        style={styles.favouriteLogo}
-      />
+      <TouchableOpacity onPress={() => dispatch(removeFromFavourite(id))}>
+        <Image
+          source={require('../../assets/icon_favourite_active.png')}
+          style={styles.favouriteLogo}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
