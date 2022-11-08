@@ -2,7 +2,7 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const AppBar = ({navigation}) => {
+const AppBar = ({navigation, title = 'Favourite'}) => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
@@ -12,7 +12,7 @@ const AppBar = ({navigation}) => {
             style={styles.backButton}
           />
         </TouchableOpacity>
-        <Text style={styles.text}>Favourite</Text>
+        <Text style={styles.text}>{title}</Text>
       </View>
       <TouchableOpacity>
         <Image

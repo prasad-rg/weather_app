@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 
-const ListView = () => {
+const ListView = ({location, temperature, source, description}) => {
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     color: '#FFE539',
     fontSize: 15,
     lineHeight: 18,
+    fontWeight: '800',
   },
   weatherLogo: {
     width: 24,
