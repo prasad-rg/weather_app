@@ -5,9 +5,11 @@ import {
   SafeAreaView,
   ImageBackground,
   Image,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import Navbar from '../components/Navbar';
+import InfoBox from '../components/InfoBox';
 
 const HomeScreen = () => {
   return (
@@ -19,25 +21,45 @@ const HomeScreen = () => {
         <View style={styles.navbar}>
           <Navbar />
         </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.dateAndTimeText}>
-            {'Wed, 28 Nov 2018 11:35 AM'.toUpperCase()}
-          </Text>
-          <Text style={styles.locationText}>Udupi, Karnataka</Text>
-          <View style={styles.favourite}>
-            <Image
-              source={require('../../assets/icon_favourite.png')}
-              style={styles.favouriteImage}
-            />
-            <Text style={styles.text}>Add to favourite</Text>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.centeredView}>
+            <View style={styles.detailsContainer}>
+              <Text style={styles.dateAndTimeText}>
+                {'Wed, 28 Nov 2018 11:35 AM'.toUpperCase()}
+              </Text>
+              <Text style={styles.locationText}>Udupi, Karnataka</Text>
+              <View style={styles.favourite}>
+                <Image
+                  source={require('../../assets/icon_favourite.png')}
+                  style={styles.favouriteImage}
+                />
+                <Text style={styles.text}>Add to favourite</Text>
+              </View>
+            </View>
+            <View style={styles.infoBox}>
+              <Text>Info Box</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.infoBox}>
-          <Text>Info Box</Text>
-        </View>
+        </ScrollView>
       </SafeAreaView>
       <View style={styles.bottomDetails}>
-        <Text>Info Box</Text>
+        <InfoBox
+          title="Min - Max"
+          value="22º - 30º"
+          logoSize={{width: 13, height: 26}}
+        />
+        <InfoBox
+          title="Precipitation"
+          value="0%"
+          source={require('../../assets/icon_precipitation_info.png')}
+          logoSize={{width: 24, height: 23}}
+        />
+        <InfoBox
+          title="Humidity"
+          value="47%"
+          source={require('../../assets/icon_humidity_info.png')}
+          logoSize={{width: 15, height: 20}}
+        />
       </View>
     </ImageBackground>
   );
@@ -48,6 +70,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 16,
+  },
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollView: {
+    flex: 1,
+    width: '100%',
   },
   navbar: {
     flexDirection: 'row',
@@ -61,6 +91,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
   },
   favourite: {
     flexDirection: 'row',
@@ -99,13 +130,13 @@ const styles = StyleSheet.create({
     height: 175,
   },
   bottomDetails: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'row',
     borderTopWidth: 0.2,
     borderColor: '#FFFFFF',
     width: '100%',
     height: 100,
     marginBottom: 10,
+    justifyContent: 'space-between',
   },
 });
 
