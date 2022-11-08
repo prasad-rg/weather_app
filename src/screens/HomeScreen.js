@@ -6,12 +6,19 @@ import {
   ImageBackground,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 
 const HomeScreen = ({navigation}) => {
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const addToFavourite = () => {
+    setIsFavourite(value => !value);
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -28,13 +35,19 @@ const HomeScreen = ({navigation}) => {
                 {'Wed, 28 Nov 2018 11:35 AM'.toUpperCase()}
               </Text>
               <Text style={styles.locationText}>Udupi, Karnataka</Text>
-              <View style={styles.favourite}>
-                <Image
-                  source={require('../../assets/icon_favourite.png')}
-                  style={styles.favouriteImage}
-                />
-                <Text style={styles.text}>Add to favourite</Text>
-              </View>
+              <TouchableOpacity onPress={() => addToFavourite()}>
+                <View style={styles.favourite}>
+                  <Image
+                    source={
+                      !isFavourite
+                        ? require('../../assets/icon_favourite.png')
+                        : require('../../assets/icon_favourite_active.png')
+                    }
+                    style={styles.favouriteImage}
+                  />
+                  <Text style={styles.text}>Add to favourite</Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.infoBox}>
               <Text>Info Box</Text>
@@ -113,6 +126,7 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     letterSpacing: 1.5,
     marginBottom: 10,
+    color: '#FFFFFF',
   },
   locationText: {
     fontSize: 18,

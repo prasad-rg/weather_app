@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar';
@@ -13,6 +14,17 @@ import ListView from '../components/ListView';
 
 const FavouriteScreen = ({navigation}) => {
   const isPresent = true;
+
+  const createTwoButtonAlert = () =>
+    Alert.alert('', 'Are you sure want to remove all the favourites?', [
+      {
+        text: 'No',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Yes', onPress: () => console.log('OK Pressed')},
+    ]);
+
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -32,7 +44,7 @@ const FavouriteScreen = ({navigation}) => {
           <>
             <View style={styles.cityCount}>
               <Text style={styles.primaryText}>6 City added as favourite</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={createTwoButtonAlert}>
                 <Text style={styles.primaryText}>Remove All</Text>
               </TouchableOpacity>
             </View>
