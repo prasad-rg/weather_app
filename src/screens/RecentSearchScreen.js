@@ -5,14 +5,46 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
+import {
+  changeFavouriteStatus,
+  clearAllRecentSearch,
+} from '../redux/recentSearch';
 
 const RecentSearchScreen = ({navigation}) => {
   const isPresent = true;
+  const {recentSearchList} = useSelector(state => state.recentSearch);
+  const dispatch = useDispatch();
+  const favouriteStatus = item => {
+    if (item.isFavourite) {
+      // dispatch(removeFromFavourite(id));
+      dispatch(changeFavouriteStatus(item.id));
+    } else {
+      dispatch(addToFavourite(item));
+      dispatch(changeFavouriteStatus(item.id));
+    }
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <ListView
+        location={item.location}
+        description={item.description}
+        temperature={item.temperature}
+        id={item.id}
+        favouriteStatus={() => favouriteStatus(item)}
+        isFavourite={item.isFavourite}
+      />
+    );
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -32,17 +64,18 @@ const RecentSearchScreen = ({navigation}) => {
           <>
             <View style={styles.cityCount}>
               <Text style={styles.primaryText}>You recently searched for</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => dispatch(clearAllRecentSearch())}>
                 <Text style={styles.primaryText}>Clear All</Text>
               </TouchableOpacity>
             </View>
-            <ScrollView style={styles.list}>
-              <ListView />
-              <ListView />
-              <ListView />
-              <ListView />
-              <ListView />
-            </ScrollView>
+            <View style={styles.list}>
+              <FlatList
+                data={recentSearchList}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
+            </View>
           </>
         )}
       </SafeAreaView>

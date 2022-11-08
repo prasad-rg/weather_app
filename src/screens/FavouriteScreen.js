@@ -9,16 +9,14 @@ import {
 } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
 import {useDispatch, useSelector} from 'react-redux';
+import {removeFromFavourite} from '../redux/favoutite';
 
 const FavouriteScreen = ({navigation}) => {
   const {favouriteList} = useSelector(state => state.favourite);
+  const dispatch = useDispatch();
 
   const createTwoButtonAlert = () =>
     Alert.alert('', 'Are you sure want to remove all the favourites?', [
@@ -30,6 +28,10 @@ const FavouriteScreen = ({navigation}) => {
       {text: 'Yes', onPress: () => console.log('OK Pressed')},
     ]);
 
+  const favouriteStatus = id => {
+    dispatch(removeFromFavourite(id));
+  };
+
   const renderItem = ({item}) => {
     return (
       <ListView
@@ -37,6 +39,7 @@ const FavouriteScreen = ({navigation}) => {
         description={item.description}
         temperature={item.temperature}
         id={item.id}
+        favouriteStatus={() => favouriteStatus(item.id)}
       />
     );
   };

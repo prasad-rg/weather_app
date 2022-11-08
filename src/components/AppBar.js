@@ -36,16 +36,17 @@ const styles = StyleSheet.create({
   },
   appBar: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   backButton: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 16,
     marginRight: 34,
   },
   searchLogo: {
     tintColor: 'black',
-    width: 24,
-    height: 24,
+    width: 18,
+    height: 18,
   },
   text: {
     color: '#292F33',

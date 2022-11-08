@@ -28,8 +28,8 @@ const Navbar = ({navigation}) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 24,
-    height: 24,
+    width: 18,
+    height: 12,
     marginRight: 32,
   },
   container: {
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   menuHolder: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

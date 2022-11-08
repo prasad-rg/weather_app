@@ -10,6 +10,8 @@ const ListView = ({
   source,
   description = 'Mostly Sunny',
   id,
+  favouriteStatus,
+  isFavourite = true,
 }) => {
   const dispatch = useDispatch();
   return (
@@ -26,9 +28,13 @@ const ListView = ({
           <Text style={styles.weatherIsLikely}>{description}</Text>
         </View>
       </View>
-      <TouchableOpacity onPress={() => dispatch(removeFromFavourite(id))}>
+      <TouchableOpacity onPress={favouriteStatus}>
         <Image
-          source={require('../../assets/icon_favourite_active.png')}
+          source={
+            isFavourite
+              ? require('../../assets/icon_favourite_active.png')
+              : require('../../assets/icon_favourite.png')
+          }
           style={styles.favouriteLogo}
         />
       </TouchableOpacity>
@@ -39,13 +45,12 @@ const ListView = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    borderWidth: 0.2,
-    borderColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingRight: 20,
     marginBottom: 2,
+    backgroundColor: 'rgba(255,255,255,0.1)',
   },
   detailsContainer: {
     paddingLeft: 15,
