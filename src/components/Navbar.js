@@ -16,7 +16,7 @@ const Navbar = ({navigation}) => {
         </TouchableOpacity>
         <Image source={require('../../assets/logo.png')} style={styles.logo} />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <Image
           source={require('../../assets/icon_search_white.png')}
           style={styles.search}

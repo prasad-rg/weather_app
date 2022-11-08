@@ -1,8 +1,6 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
-import {removeFromFavourite} from '../redux/favoutite';
 
 const ListView = ({
   location = 'Udupi, Karnataka',
@@ -13,7 +11,6 @@ const ListView = ({
   favouriteStatus,
   isFavourite = true,
 }) => {
-  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>

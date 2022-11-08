@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     marginBottom: 54,
-    // padding: 16,
+    padding: 16,
   },
   background: {
     flex: 1,
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 24,
+    alignItems: 'center',
   },
   favouriteImage: {
     width: 18,
