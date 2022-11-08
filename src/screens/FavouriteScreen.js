@@ -11,9 +11,13 @@ import React from 'react';
 import AppBar from '../components/AppBar';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
+import {useSelector} from 'react-redux';
 
 const FavouriteScreen = ({navigation}) => {
   const isPresent = true;
+
+  const {favouriteList} = useSelector(state => state.favourite);
+  console.log(favouriteList);
 
   const createTwoButtonAlert = () =>
     Alert.alert('', 'Are you sure want to remove all the favourites?', [

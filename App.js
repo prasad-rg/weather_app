@@ -1,26 +1,24 @@
-import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistStore} from 'redux-persist';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './src/screens/HomeScreen';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import 'react-native-gesture-handler';
 
+let persistor = persistStore(store);
+
 const App = () => {
-  // return <HomeScreen />;
   return (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-});
 
 export default App;
