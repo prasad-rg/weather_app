@@ -8,11 +8,17 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{
+        drawerActiveBackgroundColor: '#FFFFFF',
+        drawerActiveTintColor: 'black',
+      }}>
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+        }}
       />
       <Drawer.Screen name="Favourite" component={FavouriteScreen} />
       <Drawer.Screen name="Recent Search" component={RecentSearchScreen} />
