@@ -12,14 +12,9 @@ const DrawerNavigator = () => {
       screenOptions={{
         drawerActiveBackgroundColor: '#FFFFFF',
         drawerActiveTintColor: 'black',
+        headerShown: false,
       }}>
-      <Drawer.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Favourite" component={FavouriteScreen} />
       <Drawer.Screen name="Recent Search" component={RecentSearchScreen} />
     </Drawer.Navigator>
