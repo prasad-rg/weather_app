@@ -1,16 +1,22 @@
 import {View, Image, StyleSheet} from 'react-native';
 import React from 'react';
+import {DrawerActions} from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Navbar = () => {
+const Navbar = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.menuHolder}>
-        <Image
-          source={require('../../assets/icon_menu_white.png')}
-          style={styles.image}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+          <Image
+            source={require('../../assets/icon_menu_white.png')}
+            style={styles.image}
+          />
+        </TouchableOpacity>
         <Image source={require('../../assets/logo.png')} style={styles.logo} />
       </View>
+
       <Image
         source={require('../../assets/icon_search_white.png')}
         style={styles.search}

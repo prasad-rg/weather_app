@@ -11,7 +11,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -19,7 +19,7 @@ const HomeScreen = () => {
       style={styles.background}>
       <SafeAreaView style={styles.container}>
         <View style={styles.navbar}>
-          <Navbar />
+          <Navbar navigation={navigation} />
         </View>
         <ScrollView style={styles.scrollView}>
           <View style={styles.centeredView}>
