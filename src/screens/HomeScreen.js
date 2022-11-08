@@ -56,23 +56,25 @@ const HomeScreen = ({navigation}) => {
         </ScrollView>
       </SafeAreaView>
       <View style={styles.bottomDetails}>
-        <InfoBox
-          title="Min - Max"
-          value="22º - 30º"
-          logoSize={{width: 13, height: 26}}
-        />
-        <InfoBox
-          title="Precipitation"
-          value="0%"
-          source={require('../../assets/icon_precipitation_info.png')}
-          logoSize={{width: 24, height: 23}}
-        />
-        <InfoBox
-          title="Humidity"
-          value="47%"
-          source={require('../../assets/icon_humidity_info.png')}
-          logoSize={{width: 15, height: 20}}
-        />
+        <ScrollView horizontal>
+          <InfoBox
+            title="Min - Max"
+            value="22º - 30º"
+            logoSize={{width: 13, height: 26}}
+          />
+          <InfoBox
+            title="Precipitation"
+            value="0%"
+            source={require('../../assets/icon_precipitation_info.png')}
+            logoSize={{width: 24, height: 23}}
+          />
+          <InfoBox
+            title="Humidity"
+            value="47%"
+            source={require('../../assets/icon_humidity_info.png')}
+            logoSize={{width: 15, height: 20}}
+          />
+        </ScrollView>
       </View>
     </ImageBackground>
   );
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     marginBottom: 54,
-    padding: 16,
+    // padding: 16,
   },
   background: {
     flex: 1,

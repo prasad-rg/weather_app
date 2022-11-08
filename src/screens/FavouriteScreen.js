@@ -12,7 +12,7 @@ import AppBar from '../components/AppBar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
 import {useDispatch, useSelector} from 'react-redux';
-import {removeFromFavourite} from '../redux/favoutite';
+import {removeAllFavourite, removeFromFavourite} from '../redux/favoutite';
 
 const FavouriteScreen = ({navigation}) => {
   const {favouriteList} = useSelector(state => state.favourite);
@@ -25,7 +25,7 @@ const FavouriteScreen = ({navigation}) => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'Yes', onPress: () => console.log('OK Pressed')},
+      {text: 'Yes', onPress: () => dispatch(removeAllFavourite())},
     ]);
 
   const favouriteStatus = id => {
