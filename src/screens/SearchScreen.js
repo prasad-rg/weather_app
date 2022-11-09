@@ -9,13 +9,18 @@ import {
 import React, {useState} from 'react';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {getCityRecomendations} from '../services/getCityRecomendations';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getWeatherDataByLocation} from '../redux/weatherData';
+import {addToRecentSearch} from '../redux/recentSearch';
 
 const SearchScreen = ({navigation}) => {
   const [inputText, setInputText] = useState('');
   const [searchList, setSearchList] = useState([]);
   const dispatch = useDispatch();
+  const {isLoading, error, currentWeatherDetails} = useSelector(
+    state => state.weatherData,
+  );
+
   const handelTextChange = async value => {
     setInputText(() => setInputText(value));
     if (inputText !== '') {
@@ -28,7 +33,24 @@ const SearchScreen = ({navigation}) => {
 
   const handelSearch = city => {
     dispatch(getWeatherDataByLocation(city));
-    navigation.navigate('Home');
+    if (isLoading === false && error.length === 0) {
+      const recentSearchDetails = {
+        id: currentWeatherDetails.location.name,
+        location: {
+          name: currentWeatherDetails.location.name,
+          region: currentWeatherDetails.location.region,
+        },
+        temperature: currentWeatherDetails.current.temp_c,
+        description: currentWeatherDetails.current.condition.text,
+        icon: currentWeatherDetails.current.condition.icon.substr(
+          2,
+          currentWeatherDetails.current.condition.icon.length,
+        ),
+        isFavourite: false,
+      };
+      dispatch(addToRecentSearch(recentSearchDetails));
+      navigation.navigate('Home');
+    }
   };
 
   return (

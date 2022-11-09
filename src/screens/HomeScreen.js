@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 import CurrentWeatherBox from '../components/CurrentWeatherBox';
@@ -22,12 +22,9 @@ import moment from 'moment';
 import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
 
 const HomeScreen = ({navigation}) => {
-  // const [isFavourite, setIsFavourite] = useState(false);
   const dispatch = useDispatch();
-  const {currentWeatherDetails} = useSelector(state => state.weatherData);
   const {displayedWeatherDetails} = useSelector(state => state.weatherData);
   const addToFavouriteList = () => {
-    // setIsFavourite(value => !value);
     if (displayedWeatherDetails?.isFavourite === false) {
       const markDetailAsFavourite = {
         id: displayedWeatherDetails.location.name,
@@ -97,7 +94,11 @@ const HomeScreen = ({navigation}) => {
                   degree: displayedWeatherDetails?.current?.temp_c,
                   fahrenheit: displayedWeatherDetails?.current?.temp_f,
                 }}
-                condition={displayedWeatherDetails?.current?.condition.text}
+                condition={displayedWeatherDetails?.current.condition.text}
+                icon={displayedWeatherDetails?.current.condition.icon.substr(
+                  2,
+                  displayedWeatherDetails?.current.condition.icon.length,
+                )}
               />
             </View>
           </View>
@@ -109,7 +110,7 @@ const HomeScreen = ({navigation}) => {
             title="Min - Max"
             value={`${Math.floor(
               displayedWeatherDetails?.current?.temp_c - 2,
-            )}º - ${displayedWeatherDetails?.current?.temp_c}º`}
+            )}º - ${displayedWeatherDetails?.current?.temp_c + 2}º`}
             logoSize={{width: 13, height: 26}}
           />
           <InfoBox

@@ -17,6 +17,7 @@ import {
   changeFavouriteStatus,
   clearAllRecentSearch,
 } from '../redux/recentSearch';
+import { getWeatherDataByLocation } from '../redux/weatherData';
 
 const RecentSearchScreen = ({navigation}) => {
   const isPresent = true;
@@ -31,17 +32,24 @@ const RecentSearchScreen = ({navigation}) => {
       dispatch(changeFavouriteStatus(item.id));
     }
   };
+  const getDetailsFromRecentSearch = city => {
+    dispatch(getWeatherDataByLocation(city));
+    navigation.navigate('Home');
+  };
 
   const renderItem = ({item}) => {
     return (
-      <ListView
-        location={item.location}
-        description={item.description}
-        temperature={item.temperature}
-        id={item.id}
-        favouriteStatus={() => favouriteStatus(item)}
-        isFavourite={item.isFavourite}
-      />
+      <TouchableOpacity
+        onPress={() => getDetailsFromRecentSearch(item.location?.name)}>
+        <ListView
+          location={`${item.location?.name}, ${item.location?.region}`}
+          description={item.description}
+          temperature={item.temperature}
+          id={item.id}
+          favouriteStatus={() => favouriteStatus(item)}
+          isFavourite={item.isFavourite}
+        />
+      </TouchableOpacity>
     );
   };
 

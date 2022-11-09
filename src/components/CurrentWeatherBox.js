@@ -2,12 +2,16 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const CurrentWeatherBox = ({temperature, condition}) => {
+const CurrentWeatherBox = ({temperature, condition, icon}) => {
   const [valueIndegrees, setValueInDegrees] = useState(true);
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/icon_mostly_cloudy_big.png')}
+        source={
+          icon
+            ? {uri: `https://${icon}`}
+            : require('../../assets/icon_mostly_cloudy_big.png')
+        }
         style={styles.weatherLogo}
       />
       <View style={styles.weatherInfo}>
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
   },
   weatherLogo: {
     width: 75,
-    height: 50,
+    height: 75,
   },
   temperature: {
     color: '#FFFFFF',

@@ -52,7 +52,15 @@ export const recentSearchSlice = createSlice({
   },
   reducers: {
     addToRecentSearch: (state, action) => {
-      state.recentSearchList.unshift(action.payload);
+      let isPresent = false;
+      for (let item of state.recentSearchList) {
+        if (item.id === action.payload.id) {
+          isPresent = true;
+        }
+      }
+      if (!isPresent) {
+        state.recentSearchList.unshift(action.payload);
+      }
     },
     clearAllRecentSearch: state => {
       state.recentSearchList = [];
