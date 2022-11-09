@@ -13,6 +13,7 @@ import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeAllFavourite, removeFromFavourite} from '../redux/favoutite';
+import {unMarkAsFavourite} from '../redux/weatherData';
 
 const FavouriteScreen = ({navigation}) => {
   const {favouriteList} = useSelector(state => state.favourite);
@@ -22,20 +23,27 @@ const FavouriteScreen = ({navigation}) => {
     Alert.alert('', 'Are you sure want to remove all the favourites?', [
       {
         text: 'No',
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: () => null,
         style: 'cancel',
       },
-      {text: 'Yes', onPress: () => dispatch(removeAllFavourite())},
+      {
+        text: 'Yes',
+        onPress: () => {
+          dispatch(removeAllFavourite());
+          return dispatch(unMarkAsFavourite());
+        },
+      },
     ]);
 
   const favouriteStatus = id => {
     dispatch(removeFromFavourite(id));
+    return dispatch(unMarkAsFavourite());
   };
 
   const renderItem = ({item}) => {
     return (
       <ListView
-        location={item.location}
+        location={`${item.location?.name}, ${item.location?.region}`}
         description={item.description}
         temperature={item.temperature}
         id={item.id}

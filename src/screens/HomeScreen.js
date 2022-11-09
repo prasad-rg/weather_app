@@ -13,16 +13,42 @@ import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 import CurrentWeatherBox from '../components/CurrentWeatherBox';
 import {useDispatch, useSelector} from 'react-redux';
-import {getWeatherDataByLocation} from '../redux/weatherData';
+import {
+  getWeatherDataByLocation,
+  markAsFavourite,
+  unMarkAsFavourite,
+} from '../redux/weatherData';
 import moment from 'moment';
+import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
 
 const HomeScreen = ({navigation}) => {
-  const [isFavourite, setIsFavourite] = useState(false);
+  // const [isFavourite, setIsFavourite] = useState(false);
   const dispatch = useDispatch();
   const {currentWeatherDetails} = useSelector(state => state.weatherData);
-  const addToFavourite = () => {
+  const {displayedWeatherDetails} = useSelector(state => state.weatherData);
+  const addToFavouriteList = () => {
     // setIsFavourite(value => !value);
-    dispatch(getWeatherDataByLocation('gulbarga'));
+    if (displayedWeatherDetails?.isFavourite === false) {
+      const markDetailAsFavourite = {
+        id: displayedWeatherDetails.location.name,
+        location: {
+          name: displayedWeatherDetails.location.name,
+          region: displayedWeatherDetails.location.region,
+        },
+        temperature: displayedWeatherDetails.current.temp_c,
+        description: displayedWeatherDetails.current.condition.text,
+        icon: displayedWeatherDetails.current.condition.icon.substr(
+          2,
+          displayedWeatherDetails.current.condition.icon.length,
+        ),
+        isFavourite: true,
+      };
+      dispatch(addToFavourite(markDetailAsFavourite));
+      dispatch(markAsFavourite());
+    } else {
+      dispatch(removeFromFavourite(displayedWeatherDetails.location.name));
+      dispatch(unMarkAsFavourite());
+    }
   };
 
   useEffect(() => {
@@ -45,14 +71,14 @@ const HomeScreen = ({navigation}) => {
                 {`${moment().format('llll').toUpperCase()}`}
               </Text>
               <Text style={styles.locationText}>
-                {currentWeatherDetails?.location?.name},{' '}
-                {currentWeatherDetails?.location?.region}
+                {displayedWeatherDetails?.location?.name},{' '}
+                {displayedWeatherDetails?.location?.region}
               </Text>
-              <TouchableOpacity onPress={() => addToFavourite()}>
+              <TouchableOpacity onPress={() => addToFavouriteList()}>
                 <View style={styles.favourite}>
                   <Image
                     source={
-                      !isFavourite
+                      !displayedWeatherDetails?.isFavourite
                         ? require('../../assets/icon_favourite.png')
                         : require('../../assets/icon_favourite_active.png')
                     }
@@ -66,10 +92,10 @@ const HomeScreen = ({navigation}) => {
               {/* <Text>Info Box</Text> */}
               <CurrentWeatherBox
                 temperature={{
-                  degree: currentWeatherDetails?.current?.temp_c,
-                  fahrenheit: currentWeatherDetails?.current?.temp_f,
+                  degree: displayedWeatherDetails?.current?.temp_c,
+                  fahrenheit: displayedWeatherDetails?.current?.temp_f,
                 }}
-                condition={currentWeatherDetails?.current?.condition.text}
+                condition={displayedWeatherDetails?.current?.condition.text}
               />
             </View>
           </View>
@@ -80,19 +106,19 @@ const HomeScreen = ({navigation}) => {
           <InfoBox
             title="Min - Max"
             value={`${Math.floor(
-              currentWeatherDetails?.current?.temp_c - 2,
-            )}º - ${currentWeatherDetails?.current?.temp_c}º`}
+              displayedWeatherDetails?.current?.temp_c - 2,
+            )}º - ${displayedWeatherDetails?.current?.temp_c}º`}
             logoSize={{width: 13, height: 26}}
           />
           <InfoBox
             title="Precipitation"
-            value={`${currentWeatherDetails?.current?.precip_mm}%`}
+            value={`${displayedWeatherDetails?.current?.precip_mm}%`}
             source={require('../../assets/icon_precipitation_info.png')}
             logoSize={{width: 24, height: 23}}
           />
           <InfoBox
             title="Humidity"
-            value={`${currentWeatherDetails?.current?.humidity}%`}
+            value={`${displayedWeatherDetails?.current?.humidity}%`}
             source={require('../../assets/icon_humidity_info.png')}
             logoSize={{width: 15, height: 20}}
           />

@@ -24,10 +24,24 @@ export const weatherDataSlice = createSlice({
   name: 'currentWeather',
   initialState: {
     currentWeatherDetails: [],
+    displayedWeatherDetails: null,
     isLoading: null,
     error: [],
   },
-  reducers: {},
+  reducers: {
+    markAsFavourite: state => {
+      state.displayedWeatherDetails = {
+        ...state.displayedWeatherDetails,
+        isFavourite: true,
+      };
+    },
+    unMarkAsFavourite: state => {
+      state.displayedWeatherDetails = {
+        ...state.displayedWeatherDetails,
+        isFavourite: false,
+      };
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getWeatherDataByLocation.pending, (state, action) => {
       state.isLoading = true;
@@ -35,6 +49,7 @@ export const weatherDataSlice = createSlice({
 
     builder.addCase(getWeatherDataByLocation.fulfilled, (state, action) => {
       state.currentWeatherDetails = action.payload;
+      state.displayedWeatherDetails = {...action.payload, isFavourite: false};
       state.isLoading = false;
     });
     builder.addCase(getWeatherDataByLocation.rejected, (state, action) => {
@@ -43,6 +58,8 @@ export const weatherDataSlice = createSlice({
     });
   },
 });
+
+export const {markAsFavourite, unMarkAsFavourite} = weatherDataSlice.actions;
 
 export default weatherDataSlice.reducer;
 
