@@ -1,5 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {act} from 'react-test-renderer';
 import {BASE_URL} from '../services/baseUrl';
 import {currentWeatherByLocation} from '../services/getWeatherInformation';
 

@@ -8,12 +8,27 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
+import {getCityRecomendations} from '../services/getCityRecomendations';
+import {useDispatch} from 'react-redux';
+import {getWeatherDataByLocation} from '../redux/weatherData';
 
 const SearchScreen = ({navigation}) => {
   const [inputText, setInputText] = useState('');
-
-  const handelTextChange = value => {
+  const [searchList, setSearchList] = useState([]);
+  const dispatch = useDispatch();
+  const handelTextChange = async value => {
     setInputText(() => setInputText(value));
+    if (inputText !== '') {
+      let data = await getCityRecomendations(inputText);
+      setSearchList(data);
+    } else {
+      setSearchList([]);
+    }
+  };
+
+  const handelSearch = city => {
+    dispatch(getWeatherDataByLocation(city));
+    navigation.navigate('Home');
   };
 
   return (
@@ -46,9 +61,14 @@ const SearchScreen = ({navigation}) => {
         </View>
       </SafeAreaView>
       <View style={styles.searchListContainer}>
-        <View style={styles.listView}>
-          <Text style={styles.text}>Test</Text>
-        </View>
+        {Array.isArray(searchList) &&
+          searchList.map(city => (
+            <View style={styles.listView} key={city.id}>
+              <TouchableOpacity onPress={() => handelSearch(city.name)}>
+                <Text style={styles.text}>{city.name}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
       </View>
     </ImageBackground>
   );
