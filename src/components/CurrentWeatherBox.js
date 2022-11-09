@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const CurrentWeatherBox = () => {
+const CurrentWeatherBox = ({temperature, condition}) => {
   const [valueIndegrees, setValueInDegrees] = useState(true);
   return (
     <View style={styles.container}>
@@ -11,7 +11,9 @@ const CurrentWeatherBox = () => {
         style={styles.weatherLogo}
       />
       <View style={styles.weatherInfo}>
-        <Text style={styles.temperature}>31</Text>
+        <Text style={styles.temperature}>
+          {valueIndegrees ? temperature.degree : temperature.fahrenheit}
+        </Text>
         <View style={styles.toggleButton}>
           <TouchableOpacity
             style={valueIndegrees ? styles.units : styles.inActiveUnit}
@@ -35,7 +37,7 @@ const CurrentWeatherBox = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <Text style={styles.weatherDiscription}>Mostly Rainy</Text>
+      <Text style={styles.weatherDiscription}>{condition}</Text>
     </View>
   );
 };

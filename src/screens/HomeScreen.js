@@ -8,17 +8,26 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 import CurrentWeatherBox from '../components/CurrentWeatherBox';
+import {useDispatch, useSelector} from 'react-redux';
+import {getWeatherDataByLocation} from '../redux/weatherData';
+import moment from 'moment';
 
 const HomeScreen = ({navigation}) => {
   const [isFavourite, setIsFavourite] = useState(false);
-
+  const dispatch = useDispatch();
+  const {currentWeatherDetails} = useSelector(state => state.weatherData);
   const addToFavourite = () => {
-    setIsFavourite(value => !value);
+    // setIsFavourite(value => !value);
+    dispatch(getWeatherDataByLocation('gulbarga'));
   };
+
+  useEffect(() => {
+    dispatch(getWeatherDataByLocation('udupi'));
+  }, []);
 
   return (
     <ImageBackground
@@ -33,9 +42,12 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.centeredView}>
             <View style={styles.detailsContainer}>
               <Text style={styles.dateAndTimeText}>
-                {'Wed, 28 Nov 2018 11:35 AM'.toUpperCase()}
+                {`${moment().format('llll').toUpperCase()}`}
               </Text>
-              <Text style={styles.locationText}>Udupi, Karnataka</Text>
+              <Text style={styles.locationText}>
+                {currentWeatherDetails?.location?.name},{' '}
+                {currentWeatherDetails?.location?.region}
+              </Text>
               <TouchableOpacity onPress={() => addToFavourite()}>
                 <View style={styles.favourite}>
                   <Image
@@ -52,7 +64,13 @@ const HomeScreen = ({navigation}) => {
             </View>
             <View style={styles.infoBox}>
               {/* <Text>Info Box</Text> */}
-              <CurrentWeatherBox />
+              <CurrentWeatherBox
+                temperature={{
+                  degree: currentWeatherDetails?.current?.temp_c,
+                  fahrenheit: currentWeatherDetails?.current?.temp_f,
+                }}
+                condition={currentWeatherDetails?.current?.condition.text}
+              />
             </View>
           </View>
         </ScrollView>
@@ -61,18 +79,20 @@ const HomeScreen = ({navigation}) => {
         <ScrollView horizontal>
           <InfoBox
             title="Min - Max"
-            value="22º - 30º"
+            value={`${Math.floor(
+              currentWeatherDetails?.current?.temp_c - 2,
+            )}º - ${currentWeatherDetails?.current?.temp_c}º`}
             logoSize={{width: 13, height: 26}}
           />
           <InfoBox
             title="Precipitation"
-            value="0%"
+            value={`${currentWeatherDetails?.current?.precip_mm}%`}
             source={require('../../assets/icon_precipitation_info.png')}
             logoSize={{width: 24, height: 23}}
           />
           <InfoBox
             title="Humidity"
-            value="47%"
+            value={`${currentWeatherDetails?.current?.humidity}%`}
             source={require('../../assets/icon_humidity_info.png')}
             logoSize={{width: 15, height: 20}}
           />
