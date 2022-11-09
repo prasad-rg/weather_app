@@ -11,6 +11,7 @@ import {
 import React, {useState} from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
+import CurrentWeatherBox from '../components/CurrentWeatherBox';
 
 const HomeScreen = ({navigation}) => {
   const [isFavourite, setIsFavourite] = useState(false);
@@ -50,7 +51,8 @@ const HomeScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
             <View style={styles.infoBox}>
-              <Text>Info Box</Text>
+              {/* <Text>Info Box</Text> */}
+              <CurrentWeatherBox />
             </View>
           </View>
         </ScrollView>
@@ -141,8 +143,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 81,
-    borderWidth: 1,
-    borderColor: '#FFFFFF',
     width: 119,
     height: 175,
   },
