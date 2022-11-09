@@ -52,7 +52,9 @@ const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    dispatch(getWeatherDataByLocation('udupi'));
+    if (!displayedWeatherDetails.current) {
+      dispatch(getWeatherDataByLocation('udupi'));
+    }
   }, []);
 
   return (

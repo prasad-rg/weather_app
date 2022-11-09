@@ -46,7 +46,15 @@ export const favouriteSlice = createSlice({
   },
   reducers: {
     addToFavourite: (state, action) => {
-      state.favouriteList.unshift(action.payload);
+      let isPresent = false;
+      for (let item of state.favouriteList) {
+        if (item.id === action.payload.id) {
+          isPresent = true;
+        }
+      }
+      if (!isPresent) {
+        state.favouriteList.unshift(action.payload);
+      }
     },
     removeFromFavourite: (state, action) => {
       state.favouriteList = state.favouriteList.filter(

@@ -13,7 +13,10 @@ import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeAllFavourite, removeFromFavourite} from '../redux/favoutite';
-import {unMarkAsFavourite} from '../redux/weatherData';
+import {
+  getWeatherDataByLocation,
+  unMarkAsFavourite,
+} from '../redux/weatherData';
 
 const FavouriteScreen = ({navigation}) => {
   const {favouriteList} = useSelector(state => state.favourite);
@@ -40,15 +43,23 @@ const FavouriteScreen = ({navigation}) => {
     return dispatch(unMarkAsFavourite());
   };
 
+  const getDetailsFromFavourite = city => {
+    dispatch(getWeatherDataByLocation(city));
+    navigation.navigate('Home');
+  };
+
   const renderItem = ({item}) => {
     return (
-      <ListView
-        location={`${item.location?.name}, ${item.location?.region}`}
-        description={item.description}
-        temperature={item.temperature}
-        id={item.id}
-        favouriteStatus={() => favouriteStatus(item.id)}
-      />
+      <TouchableOpacity
+        onPress={() => getDetailsFromFavourite(item.location?.name)}>
+        <ListView
+          location={`${item.location?.name}, ${item.location?.region}`}
+          description={item.description}
+          temperature={item.temperature}
+          id={item.id}
+          favouriteStatus={() => favouriteStatus(item.id)}
+        />
+      </TouchableOpacity>
     );
   };
 
