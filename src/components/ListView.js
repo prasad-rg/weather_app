@@ -5,7 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const ListView = ({
   location = 'Udupi, Karnataka',
   temperature = '31',
-  source,
+  icon,
   description = 'Mostly Sunny',
   id,
   favouriteStatus,
@@ -17,7 +17,11 @@ const ListView = ({
         <Text style={styles.primaryText}>{location}</Text>
         <View style={styles.infoContainer}>
           <Image
-            source={require('../../assets/icon_mostly_sunny_small.png')}
+            source={
+              icon
+                ? {uri: `https://${icon}`}
+                : require('../../assets/icon_mostly_sunny_small.png')
+            }
             style={styles.weatherLogo}
           />
           <Text style={styles.temperatureText}>{temperature}</Text>

@@ -17,7 +17,7 @@ import {
   changeFavouriteStatus,
   clearAllRecentSearch,
 } from '../redux/recentSearch';
-import { getWeatherDataByLocation } from '../redux/weatherData';
+import {getWeatherDataByLocation} from '../redux/weatherData';
 
 const RecentSearchScreen = ({navigation}) => {
   const isPresent = true;
@@ -25,7 +25,7 @@ const RecentSearchScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const favouriteStatus = item => {
     if (item.isFavourite) {
-      // dispatch(removeFromFavourite(id));
+      dispatch(removeFromFavourite(item.id));
       dispatch(changeFavouriteStatus(item.id));
     } else {
       dispatch(addToFavourite(item));
@@ -48,6 +48,7 @@ const RecentSearchScreen = ({navigation}) => {
           id={item.id}
           favouriteStatus={() => favouriteStatus(item)}
           isFavourite={item.isFavourite}
+          icon={item.icon}
         />
       </TouchableOpacity>
     );

@@ -33,6 +33,12 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 26,
     justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   appBar: {
     flexDirection: 'row',

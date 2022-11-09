@@ -58,6 +58,7 @@ const FavouriteScreen = ({navigation}) => {
           temperature={item.temperature}
           id={item.id}
           favouriteStatus={() => favouriteStatus(item.id)}
+          icon={item.icon}
         />
       </TouchableOpacity>
     );
