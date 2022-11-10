@@ -21,7 +21,7 @@ import {
 } from '../redux/weatherData';
 import moment from 'moment';
 import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
-import {addToRecentSearch} from '../redux/recentSearch';
+// import {addToRecentSearch} from '../redux/recentSearch';
 
 const HomeScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -29,27 +29,27 @@ const HomeScreen = ({navigation, route}) => {
     state => state.weatherData,
   );
 
-  const appendToRecentsearch = () => {
-    if (!isLoading && !displayedWeatherDetails?.error) {
-      if (route?.params?.isFromSearch) {
-        const recentSearchDetails = {
-          id: displayedWeatherDetails.location.name,
-          location: {
-            name: displayedWeatherDetails.location.name,
-            region: displayedWeatherDetails.location.region,
-          },
-          temperature: displayedWeatherDetails.current.temp_c,
-          description: displayedWeatherDetails.current.condition.text,
-          icon: displayedWeatherDetails.current.condition.icon.substr(
-            2,
-            displayedWeatherDetails.current.condition.icon.length,
-          ),
-          isFavourite: false,
-        };
-        dispatch(addToRecentSearch(recentSearchDetails));
-      }
-    }
-  };
+  // const appendToRecentsearch = () => {
+  //   if (!isLoading && !displayedWeatherDetails?.error) {
+  //     if (route?.params?.isFromSearch) {
+  //       const recentSearchDetails = {
+  //         id: displayedWeatherDetails.location.name,
+  //         location: {
+  //           name: displayedWeatherDetails.location.name,
+  //           region: displayedWeatherDetails.location.region,
+  //         },
+  //         temperature: displayedWeatherDetails.current.temp_c,
+  //         description: displayedWeatherDetails.current.condition.text,
+  //         icon: displayedWeatherDetails.current.condition.icon.substr(
+  //           2,
+  //           displayedWeatherDetails.current.condition.icon.length,
+  //         ),
+  //         isFavourite: false,
+  //       };
+  //       dispatch(addToRecentSearch(recentSearchDetails));
+  //     }
+  //   }
+  // };
 
   const addToFavouriteList = () => {
     if (displayedWeatherDetails?.isFavourite === false) {
@@ -86,7 +86,7 @@ const HomeScreen = ({navigation, route}) => {
       source={require('../../assets/background_android.png')}
       resizeMode="cover"
       style={styles.background}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.containerAndroid}>
         <View style={styles.navbar}>
           <Navbar navigation={navigation} />
         </View>
@@ -209,7 +209,12 @@ const HomeScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerAndroid: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 8,
+  },
+  containerIOS: {
     flex: 1,
     alignItems: 'center',
     padding: 16,
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 81,
     width: 119,
-    height: 175,
+    // height: 175,
   },
   bottomDetails: {
     flexDirection: 'row',

@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   cityCount: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 15,
   },
   primaryText: {
     fontSize: 13,
@@ -112,8 +112,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   list: {
-    padding: 16,
+    paddingHorizontal: 16,
     flex: 1,
+    paddingTop: 8,
   },
   nothingFoundImage: {
     width: 159,

@@ -22,8 +22,8 @@ const InfoBox = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 94,
-    height: 41,
+    // width: 94,
+    // height: 41,
     flexDirection: 'row',
     marginVertical: 30,
     marginHorizontal: 18,

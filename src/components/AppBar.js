@@ -15,7 +15,7 @@ const AppBar = ({navigation, title = 'Favourite'}) => {
         </TouchableOpacity>
         <Text style={styles.text}>{title}</Text>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <Image
           source={require('../../assets/icon_search_white.png')}
           style={styles.searchLogo}
