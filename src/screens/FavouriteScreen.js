@@ -6,10 +6,11 @@ import {
   SafeAreaView,
   Image,
   Alert,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import AppBar from '../components/AppBar';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListView from '../components/ListView';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeAllFavourite, removeFromFavourite} from '../redux/favoutite';

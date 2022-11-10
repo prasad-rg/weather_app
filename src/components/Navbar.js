@@ -1,7 +1,6 @@
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {DrawerActions} from '@react-navigation/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Navbar = ({navigation}) => {
   return (

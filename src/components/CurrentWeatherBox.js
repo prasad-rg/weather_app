@@ -1,6 +1,5 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const CurrentWeatherBox = ({temperature, condition, icon}) => {
   const [valueIndegrees, setValueInDegrees] = useState(true);
