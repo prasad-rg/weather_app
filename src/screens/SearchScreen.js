@@ -50,7 +50,7 @@ const SearchScreen = ({navigation}) => {
         isFavourite: false,
       };
       dispatch(addToRecentSearch(recentSearchDetails));
-      navigation.navigate('Home');
+      navigation.navigate('Home', {isFromSearch: true});
     }
   };
 

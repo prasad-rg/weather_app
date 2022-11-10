@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 
 const CurrentWeatherBox = ({
   temperature,
@@ -8,7 +8,6 @@ const CurrentWeatherBox = ({
   onPress,
   valueIndegrees = true,
 }) => {
-  // const [valueIndegrees, setValueInDegrees] = useState(IsValueIndegrees);
   return (
     <View style={styles.container}>
       <Image

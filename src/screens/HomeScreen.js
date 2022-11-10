@@ -21,12 +21,36 @@ import {
 } from '../redux/weatherData';
 import moment from 'moment';
 import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
+import {addToRecentSearch} from '../redux/recentSearch';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const {displayedWeatherDetails, isLoading} = useSelector(
     state => state.weatherData,
   );
+
+  const appendToRecentsearch = () => {
+    if (!isLoading && !displayedWeatherDetails?.error) {
+      if (route?.params?.isFromSearch) {
+        const recentSearchDetails = {
+          id: displayedWeatherDetails.location.name,
+          location: {
+            name: displayedWeatherDetails.location.name,
+            region: displayedWeatherDetails.location.region,
+          },
+          temperature: displayedWeatherDetails.current.temp_c,
+          description: displayedWeatherDetails.current.condition.text,
+          icon: displayedWeatherDetails.current.condition.icon.substr(
+            2,
+            displayedWeatherDetails.current.condition.icon.length,
+          ),
+          isFavourite: false,
+        };
+        dispatch(addToRecentSearch(recentSearchDetails));
+      }
+    }
+  };
+
   const addToFavouriteList = () => {
     if (displayedWeatherDetails?.isFavourite === false) {
       const markDetailAsFavourite = {
@@ -166,7 +190,7 @@ const HomeScreen = ({navigation}) => {
                 : `${displayedWeatherDetails?.current?.wind_kph} km/h`
             }
             source={require('../../assets/icon_wind_info.png')}
-            logoSize={{width: 15, height: 20}}
+            logoSize={{width: 20, height: 17}}
           />
           <InfoBox
             title="Visibility"
@@ -176,7 +200,7 @@ const HomeScreen = ({navigation}) => {
                 : `${displayedWeatherDetails?.current?.vis_km} km`
             }
             source={require('../../assets/icon_visibility_info.png')}
-            logoSize={{width: 15, height: 20}}
+            logoSize={{width: 26, height: 17}}
           />
         </ScrollView>
       </View>
