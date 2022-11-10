@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     color: '#FFE539',
     fontSize: 15,
     lineHeight: 18,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Medium',
   },
   weatherLogo: {
     width: 24,
@@ -76,15 +76,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#FFFFFF',
     marginLeft: 9,
+    fontFamily: 'Roboto-Medium',
   },
   degreeSymbol: {
     fontSize: 13,
     color: '#FFFFFF',
     marginLeft: 2,
     marginRight: 17,
+    fontFamily: 'Roboto-Regular',
   },
   weatherIsLikely: {
     color: '#FFFFFF',
+    fontFamily: 'Roboto-Regular',
+    fontSize: 14,
   },
   favouriteLogo: {
     width: 18,

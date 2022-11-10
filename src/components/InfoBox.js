@@ -38,14 +38,17 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
     marginBottom: 5,
+    fontFamily: 'Roboto-Regular',
   },
   primaryText: {
     fontSize: 13,
     lineHeight: 15,
+    fontFamily: 'Roboto-Regular',
   },
   secondaryText: {
     fontSize: 18,
     lineHeight: 21,
+    fontFamily: 'Roboto-Medium',
   },
   textContainer: {},
 });

@@ -75,7 +75,11 @@ const RecentSearchScreen = ({navigation}) => {
               <Text style={styles.primaryText}>You recently searched for</Text>
               <TouchableOpacity
                 onPress={() => dispatch(clearAllRecentSearch())}>
-                <Text style={styles.primaryText}>Clear All</Text>
+                <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  style={[styles.primaryText, {fontFamily: 'Roboto-Medium'}]}>
+                  Clear All
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.list}>
@@ -105,9 +109,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 15,
     color: '#FFFFFF',
+    fontFamily: 'Roboto-Regular',
   },
   list: {
     padding: 16,
+    flex: 1,
   },
   nothingFoundImage: {
     width: 159,

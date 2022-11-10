@@ -87,7 +87,11 @@ const FavouriteScreen = ({navigation}) => {
                 {favouriteList.length} City added as favourite
               </Text>
               <TouchableOpacity onPress={createTwoButtonAlert}>
-                <Text style={styles.primaryText}>Remove All</Text>
+                <Text
+                  // eslint-disable-next-line react-native/no-inline-styles
+                  style={[styles.primaryText, {fontFamily: 'Roboto-Medium'}]}>
+                  Remove All
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.list}>
@@ -117,6 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 15,
     color: '#FFFFFF',
+    fontFamily: 'Roboto-Regular',
   },
   list: {
     padding: 16,
@@ -136,6 +141,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginTop: 25,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
 });
 

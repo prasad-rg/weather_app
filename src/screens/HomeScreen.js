@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
     textAlign: 'center',
+    fontFamily: 'Roboto-Medium',
   },
   dateAndTimeText: {
     opacity: 0.6,
@@ -258,12 +259,14 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
     marginBottom: 10,
     color: '#FFFFFF',
+    fontFamily: 'Roboto-Regular',
   },
   locationText: {
     fontSize: 18,
     lineHeight: 21,
     textAlign: 'center',
     color: '#FFFFFF',
+    fontFamily: 'Roboto-Medium',
   },
   infoBox: {
     justifyContent: 'center',
@@ -280,6 +283,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 10,
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(255,255,255,0.1)',
   },
 });
 

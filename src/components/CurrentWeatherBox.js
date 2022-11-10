@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 52,
     lineHeight: 61,
+    fontFamily: 'Roboto-Medium',
   },
   weatherInfo: {
     flexDirection: 'row',

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: '#292F33',
     fontSize: 20,
     lineHeight: 24,
-    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
   },
 });
 
