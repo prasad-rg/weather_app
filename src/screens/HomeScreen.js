@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import Navbar from '../components/Navbar';
@@ -23,7 +24,9 @@ import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const {displayedWeatherDetails} = useSelector(state => state.weatherData);
+  const {displayedWeatherDetails, isLoading} = useSelector(
+    state => state.weatherData,
+  );
   const addToFavouriteList = () => {
     if (displayedWeatherDetails?.isFavourite === false) {
       const markDetailAsFavourite = {
@@ -49,7 +52,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (!displayedWeatherDetails.current) {
+    if (!displayedWeatherDetails?.current) {
       dispatch(getWeatherDataByLocation('udupi'));
     }
   }, []);
@@ -65,42 +68,55 @@ const HomeScreen = ({navigation}) => {
         </View>
         <ScrollView style={styles.scrollView}>
           <View style={styles.centeredView}>
-            <View style={styles.detailsContainer}>
-              <Text style={styles.dateAndTimeText}>
-                {`${moment().format('llll').toUpperCase()}`}
-              </Text>
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#75889F" />
+            ) : displayedWeatherDetails?.error ? (
               <Text style={styles.locationText}>
-                {displayedWeatherDetails?.location?.name},{' '}
-                {displayedWeatherDetails?.location?.region}
+                {displayedWeatherDetails?.error.message} {'\n'}
+                'Please Search Again'
               </Text>
-              <TouchableOpacity onPress={() => addToFavouriteList()}>
-                <View style={styles.favourite}>
-                  <Image
-                    source={
-                      !displayedWeatherDetails?.isFavourite
-                        ? require('../../assets/icon_favourite.png')
-                        : require('../../assets/icon_favourite_active.png')
-                    }
-                    style={styles.favouriteImage}
-                  />
-                  <Text style={styles.text}>Add to favourite</Text>
+            ) : (
+              <>
+                <View style={styles.detailsContainer}>
+                  <Text style={styles.dateAndTimeText}>
+                    {`${moment().format('llll').toUpperCase()}`}
+                  </Text>
+                  <Text style={styles.locationText}>
+                    {displayedWeatherDetails?.location?.name},{' '}
+                    {displayedWeatherDetails?.location?.region}
+                  </Text>
+                  <TouchableOpacity onPress={() => addToFavouriteList()}>
+                    <View style={styles.favourite}>
+                      <Image
+                        source={
+                          !displayedWeatherDetails?.isFavourite
+                            ? require('../../assets/icon_favourite.png')
+                            : require('../../assets/icon_favourite_active.png')
+                        }
+                        style={styles.favouriteImage}
+                      />
+                      <Text style={styles.text}>Add to favourite</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.infoBox}>
-              {/* <Text>Info Box</Text> */}
-              <CurrentWeatherBox
-                temperature={{
-                  degree: displayedWeatherDetails?.current?.temp_c,
-                  fahrenheit: displayedWeatherDetails?.current?.temp_f,
-                }}
-                condition={displayedWeatherDetails?.current.condition.text}
-                icon={displayedWeatherDetails?.current.condition.icon.substr(
-                  2,
-                  displayedWeatherDetails?.current.condition.icon.length,
-                )}
-              />
-            </View>
+                <View style={styles.infoBox}>
+                  {/* <Text>Info Box</Text> */}
+                  <CurrentWeatherBox
+                    temperature={{
+                      degree: displayedWeatherDetails?.current?.temp_c,
+                      fahrenheit: displayedWeatherDetails?.current?.temp_f,
+                    }}
+                    condition={
+                      displayedWeatherDetails?.current?.condition?.text
+                    }
+                    icon={displayedWeatherDetails?.current?.condition?.icon.substr(
+                      2,
+                      displayedWeatherDetails?.current.condition.icon.length,
+                    )}
+                  />
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -108,20 +124,32 @@ const HomeScreen = ({navigation}) => {
         <ScrollView horizontal>
           <InfoBox
             title="Min - Max"
-            value={`${Math.floor(
-              displayedWeatherDetails?.current?.temp_c - 2,
-            )}º - ${displayedWeatherDetails?.current?.temp_c + 2}º`}
+            value={
+              displayedWeatherDetails?.error
+                ? ''
+                : `${Math.floor(
+                    displayedWeatherDetails?.current?.temp_c - 2,
+                  )}º - ${displayedWeatherDetails?.current?.temp_c + 2}º`
+            }
             logoSize={{width: 13, height: 26}}
           />
           <InfoBox
             title="Precipitation"
-            value={`${displayedWeatherDetails?.current?.precip_mm}%`}
+            value={
+              displayedWeatherDetails?.error
+                ? ''
+                : `${displayedWeatherDetails?.current?.precip_mm}%`
+            }
             source={require('../../assets/icon_precipitation_info.png')}
             logoSize={{width: 24, height: 23}}
           />
           <InfoBox
             title="Humidity"
-            value={`${displayedWeatherDetails?.current?.humidity}%`}
+            value={
+              displayedWeatherDetails?.error
+                ? ''
+                : `${displayedWeatherDetails?.current?.humidity}%`
+            }
             source={require('../../assets/icon_humidity_info.png')}
             logoSize={{width: 15, height: 20}}
           />

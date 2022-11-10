@@ -5,9 +5,10 @@ import {
   Image,
   StyleSheet,
   ImageBackground,
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {getCityRecomendations} from '../services/getCityRecomendations';
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeatherDataByLocation} from '../redux/weatherData';
@@ -85,11 +86,14 @@ const SearchScreen = ({navigation}) => {
       <View style={styles.searchListContainer}>
         {Array.isArray(searchList) &&
           searchList.map(city => (
-            <View style={styles.listView} key={city.id}>
-              <TouchableOpacity onPress={() => handelSearch(city.name)}>
-                <Text style={styles.text}>{city.name}</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                handelSearch(city.name);
+              }}
+              key={city.id}
+              style={styles.listView}>
+              <Text style={styles.text}>{city.name}</Text>
+            </TouchableOpacity>
           ))}
       </View>
     </ImageBackground>
@@ -122,6 +126,7 @@ const styles = StyleSheet.create({
     width: '90%',
     color: '#707070',
     fontSize: 14,
+    height: 56,
   },
   clearLogo: {
     width: 14,

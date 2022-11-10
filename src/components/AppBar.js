@@ -1,12 +1,14 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DrawerActions} from '@react-navigation/native';
 
 const AppBar = ({navigation, title = 'Favourite'}) => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.jumpTo('Home'))}>
           <Image
             source={require('../../assets/icon_back_black.png')}
             style={styles.backButton}
