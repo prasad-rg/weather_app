@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from '../components/Navbar';
 import InfoBox from '../components/InfoBox';
 import CurrentWeatherBox from '../components/CurrentWeatherBox';
@@ -56,7 +56,7 @@ const HomeScreen = ({navigation}) => {
       dispatch(getWeatherDataByLocation('udupi'));
     }
   }, []);
-
+  const [valuesInDegrees, setValuesInDegrees] = useState(true);
   return (
     <ImageBackground
       source={require('../../assets/background_android.png')}
@@ -100,7 +100,6 @@ const HomeScreen = ({navigation}) => {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.infoBox}>
-                  {/* <Text>Info Box</Text> */}
                   <CurrentWeatherBox
                     temperature={{
                       degree: displayedWeatherDetails?.current?.temp_c,
@@ -113,6 +112,8 @@ const HomeScreen = ({navigation}) => {
                       2,
                       displayedWeatherDetails?.current.condition.icon.length,
                     )}
+                    onPress={() => setValuesInDegrees(!valuesInDegrees)}
+                    valueIndegrees={valuesInDegrees}
                   />
                 </View>
               </>
@@ -121,15 +122,19 @@ const HomeScreen = ({navigation}) => {
         </ScrollView>
       </SafeAreaView>
       <View style={styles.bottomDetails}>
-        <ScrollView horizontal>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <InfoBox
             title="Min - Max"
             value={
               displayedWeatherDetails?.error
                 ? ''
-                : `${Math.floor(
+                : valuesInDegrees
+                ? `${Math.floor(
                     displayedWeatherDetails?.current?.temp_c - 2,
                   )}º - ${displayedWeatherDetails?.current?.temp_c + 2}º`
+                : `${Math.floor(
+                    displayedWeatherDetails?.current?.temp_f - 2,
+                  )}º - ${displayedWeatherDetails?.current?.temp_f + 2}º`
             }
             logoSize={{width: 13, height: 26}}
           />
@@ -151,6 +156,26 @@ const HomeScreen = ({navigation}) => {
                 : `${displayedWeatherDetails?.current?.humidity}%`
             }
             source={require('../../assets/icon_humidity_info.png')}
+            logoSize={{width: 15, height: 20}}
+          />
+          <InfoBox
+            title="Wind"
+            value={
+              displayedWeatherDetails?.error
+                ? ''
+                : `${displayedWeatherDetails?.current?.wind_kph} km/h`
+            }
+            source={require('../../assets/icon_wind_info.png')}
+            logoSize={{width: 15, height: 20}}
+          />
+          <InfoBox
+            title="Visibility"
+            value={
+              displayedWeatherDetails?.error
+                ? ''
+                : `${displayedWeatherDetails?.current?.vis_km} km`
+            }
+            source={require('../../assets/icon_visibility_info.png')}
             logoSize={{width: 15, height: 20}}
           />
         </ScrollView>

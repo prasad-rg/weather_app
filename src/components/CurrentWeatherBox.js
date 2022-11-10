@@ -1,8 +1,14 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 
-const CurrentWeatherBox = ({temperature, condition, icon}) => {
-  const [valueIndegrees, setValueInDegrees] = useState(true);
+const CurrentWeatherBox = ({
+  temperature,
+  condition,
+  icon,
+  onPress,
+  valueIndegrees = true,
+}) => {
+  // const [valueIndegrees, setValueInDegrees] = useState(IsValueIndegrees);
   return (
     <View style={styles.container}>
       <Image
@@ -20,7 +26,8 @@ const CurrentWeatherBox = ({temperature, condition, icon}) => {
         <View style={styles.toggleButton}>
           <TouchableOpacity
             style={valueIndegrees ? styles.units : styles.inActiveUnit}
-            onPress={() => setValueInDegrees(inDegrees => !inDegrees)}>
+            // onPress={() => setValueInDegrees(inDegrees => !inDegrees)}
+            onPress={onPress}>
             <Text
               style={
                 valueIndegrees ? styles.unitsText : styles.inActiveUnitText
@@ -30,7 +37,7 @@ const CurrentWeatherBox = ({temperature, condition, icon}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={valueIndegrees ? styles.inActiveUnit : styles.units}
-            onPress={() => setValueInDegrees(inDegrees => !inDegrees)}>
+            onPress={onPress}>
             <Text
               style={
                 valueIndegrees ? styles.inActiveUnitText : styles.unitsText
