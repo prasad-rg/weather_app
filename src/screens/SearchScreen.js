@@ -33,25 +33,27 @@ const SearchScreen = ({navigation}) => {
   };
 
   const handelSearch = city => {
-    dispatch(getWeatherDataByLocation(city));
-    if (isLoading === false && error.length === 0) {
-      const recentSearchDetails = {
-        id: currentWeatherDetails.location.name,
-        location: {
-          name: currentWeatherDetails.location.name,
-          region: currentWeatherDetails.location.region,
-        },
-        temperature: currentWeatherDetails.current.temp_c,
-        description: currentWeatherDetails.current.condition.text,
-        icon: currentWeatherDetails.current.condition.icon.substr(
-          2,
-          currentWeatherDetails.current.condition.icon.length,
-        ),
-        isFavourite: false,
-      };
-      dispatch(addToRecentSearch(recentSearchDetails));
-      navigation.navigate('Home', {isFromSearch: true});
-    }
+    dispatch(getWeatherDataByLocation(city)).then(res => {
+      if (isLoading === false && error.length === 0) {
+        const recentSearchDetails = {
+          id: res.payload.location.name,
+          location: {
+            name: res.payload.location.name,
+            region: res.payload.location.region,
+          },
+          temperature: res.payload.current.temp_c,
+          description: res.payload.current.condition.text,
+          icon: res.payload.current.condition.icon.substr(
+            2,
+            res.payload.current.condition.icon.length,
+          ),
+          isFavourite: false,
+        };
+        dispatch(addToRecentSearch(recentSearchDetails));
+        navigation.navigate('Home', {isFromSearch: true});
+      }
+      return res;
+    });
   };
 
   return (

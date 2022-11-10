@@ -18,6 +18,7 @@ import {
   getWeatherDataByLocation,
   unMarkAsFavourite,
 } from '../redux/weatherData';
+import {changeFavouriteStatus} from '../redux/recentSearch';
 
 const FavouriteScreen = ({navigation}) => {
   const {favouriteList} = useSelector(state => state.favourite);
@@ -41,6 +42,7 @@ const FavouriteScreen = ({navigation}) => {
 
   const favouriteStatus = id => {
     dispatch(removeFromFavourite(id));
+    dispatch(changeFavouriteStatus(id));
     return dispatch(unMarkAsFavourite());
   };
 

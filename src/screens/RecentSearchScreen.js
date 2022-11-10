@@ -20,7 +20,6 @@ import {
 import {getWeatherDataByLocation} from '../redux/weatherData';
 
 const RecentSearchScreen = ({navigation}) => {
-  const isPresent = true;
   const {recentSearchList} = useSelector(state => state.recentSearch);
   const dispatch = useDispatch();
   const favouriteStatus = item => {
@@ -61,7 +60,7 @@ const RecentSearchScreen = ({navigation}) => {
       style={styles.background}>
       <SafeAreaView style={styles.background}>
         <AppBar navigation={navigation} title="Recent Search" />
-        {!isPresent ? (
+        {!recentSearchList.length ? (
           <View style={styles.nothingFoundContainer}>
             <Image
               source={require('../../assets/icon_nothing.png')}
