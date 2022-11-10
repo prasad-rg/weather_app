@@ -6,6 +6,7 @@ export const favouriteSlice = createSlice({
   name: 'favourite',
   initialState: {
     favouriteList: initialValue,
+    isFavouriteItem: null,
   },
   reducers: {
     addToFavourite: (state, action) => {
@@ -27,9 +28,21 @@ export const favouriteSlice = createSlice({
     removeAllFavourite: state => {
       state.favouriteList = [];
     },
+    checkItemInFavouriteList: (state, action) => {
+      state.isFavouriteItem = false;
+      for (let item of state.favouriteList) {
+        if (item.id === action.payload) {
+          state.isFavouriteItem = true;
+        }
+      }
+    },
   },
 });
 
-export const {addToFavourite, removeFromFavourite, removeAllFavourite} =
-  favouriteSlice.actions;
+export const {
+  addToFavourite,
+  removeFromFavourite,
+  removeAllFavourite,
+  checkItemInFavouriteList,
+} = favouriteSlice.actions;
 export default favouriteSlice.reducer;

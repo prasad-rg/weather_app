@@ -21,36 +21,12 @@ import {
 } from '../redux/weatherData';
 import moment from 'moment';
 import {addToFavourite, removeFromFavourite} from '../redux/favoutite';
-// import {addToRecentSearch} from '../redux/recentSearch';
 
 const HomeScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const {displayedWeatherDetails, isLoading} = useSelector(
     state => state.weatherData,
   );
-
-  // const appendToRecentsearch = () => {
-  //   if (!isLoading && !displayedWeatherDetails?.error) {
-  //     if (route?.params?.isFromSearch) {
-  //       const recentSearchDetails = {
-  //         id: displayedWeatherDetails.location.name,
-  //         location: {
-  //           name: displayedWeatherDetails.location.name,
-  //           region: displayedWeatherDetails.location.region,
-  //         },
-  //         temperature: displayedWeatherDetails.current.temp_c,
-  //         description: displayedWeatherDetails.current.condition.text,
-  //         icon: displayedWeatherDetails.current.condition.icon.substr(
-  //           2,
-  //           displayedWeatherDetails.current.condition.icon.length,
-  //         ),
-  //         isFavourite: false,
-  //       };
-  //       dispatch(addToRecentSearch(recentSearchDetails));
-  //     }
-  //   }
-  // };
-
   const addToFavouriteList = () => {
     if (displayedWeatherDetails?.isFavourite === false) {
       const markDetailAsFavourite = {
@@ -286,7 +262,7 @@ const styles = StyleSheet.create({
     borderColor: '#FFFFFF',
     width: '100%',
     height: 100,
-    marginBottom: 10,
+    // marginBottom: 10,
     justifyContent: 'space-between',
     backgroundColor: 'rgba(255,255,255,0.1)',
   },
